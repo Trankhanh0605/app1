@@ -1,8 +1,9 @@
 require('dotenv').config()
 const express = require('express')
-const Note = require('./models/note')
-
 const app = express()
+app.use(express.static('dist'))
+app.use(express.json())
+const Note = require('./models/note')
 
 let notes = []
 
