@@ -21,27 +21,6 @@ const noteSchema = new mongoose.Schema({
 
 const Note = mongoose.model('Note', noteSchema)
 
-// create and saving objects
-// const note1 = new Note({
-//   content: 'HTML is easy',
-//   important: true,
-// })
-
-// note1.save().then(result => {
-//   console.log('note1 saved!')
-//   mongoose.connection.close()
-// })
-
-// const note2=new Note({
-//   content: 'learning to code', 
-//   important: false,
-// })
-
-// note2.save().then(result=>{
-//   console.log('note2 saved successfully')
-//   mongoose.connection.close()
-// })
-
 Note.find({important: true}).then(result => {
   result.forEach(note => {
     console.log(note)
