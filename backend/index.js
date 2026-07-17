@@ -1,28 +1,10 @@
 require('dotenv').config()
 const express = require('express')
-const app = express()
-app.use(express.json())
-app.use(express.static('dist'))
-const mongoose = require('mongoose')
 const Note = require('./models/note')
 
-let notes = [
-  {
-    id: "1",
-    content: "HTML is easy",
-    important: true
-  },
-  {
-    id: "2",
-    content: "Browser can execute only JavaScript",
-    important: false
-  },
-  {
-    id: "3",
-    content: "GET and POST are the most important methods of HTTP protocol",
-    important: true
-  }
-]
+const app = express()
+
+let notes = []
 
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
