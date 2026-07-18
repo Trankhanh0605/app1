@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
 const Note = require('./models/note')
 
 const app = express()
@@ -27,6 +28,7 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
+app.use(cors())
 app.use(requestLogger)
 app.use(express.static('dist'))
 app.use(express.json())
@@ -98,7 +100,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 app.use(errorHandler)
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
