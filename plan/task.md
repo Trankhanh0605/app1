@@ -1,0 +1,8 @@
+- [x] Install backend dependencies (cors)
+- [x] Configure backend `package.json`
+- [x] Configure backend `index.js` (CORS support, port fallback)
+- [x] Configure frontend `notes.js` (only return DB notes)
+- [x] Configure frontend `App.jsx` (initialize errorMessage to null)
+- [x] Configure frontend `vite.config.js` (configure build.outDir)
+- [x] Build frontend and verify build output in backend
+- [x] Verify backend server runs and connects to MongoDB
