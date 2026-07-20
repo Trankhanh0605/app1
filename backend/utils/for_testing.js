@@ -6,6 +6,9 @@ const reverse = (string) => {
 }
 
 const average = (array) => {
+  if (array.length==0) {
+    return 0
+  }
   const reducer = (sum, item) => {
     return sum + item
   }
