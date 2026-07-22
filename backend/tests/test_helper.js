@@ -10,6 +10,7 @@ const initialNotes = [
   }
 ]
 
+// creating a database object ID that does not belong to any note object in the database.
 const nonExistingId=async()=>{
   const note=new Note({content:'willremovethissoon'})
   await note.save()
@@ -17,6 +18,7 @@ const nonExistingId=async()=>{
   return note._id.toString()
 }
 
+// checking the notes stored in the database.
 const notesInDb=async()=>{
   const notes=await Note.find({})
   return notes.map(note=>note.toJSON())
