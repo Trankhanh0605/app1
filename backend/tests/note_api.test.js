@@ -2,11 +2,11 @@ const { test, after, beforeEach } = require('node:test')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
-const helper=require('./test_helper')
-const Note=require('../models/note')
+const helper = require('./test_helper')
+const Note = require('../models/note')
 
 const api = supertest(app)
-const assert=require('node:assert')
+const assert = require('node:assert')
 
 beforeEach(async () => {
   await Note.deleteMany({})
@@ -69,6 +69,32 @@ test('note without content is not added', async () => {
   const notesAtEnd = await helper.notesInDb()
 
   assert.strictEqual(notesAtEnd.length, helper.initialNotes.length)
+})
+
+test('a specific note can be viewed', async () => {
+  const notesAtStart = await helper.notesInDb();
+  const noteToView = notesAtStart[0]
+  const resultNote = await api
+    .get(`/api/notes/${noteToView.id}`)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+  assert.deepStrictEqual(resultNote.body, noteToView)
+})
+
+test('a note can be deleted', async () => {
+  const notesAtStart = await helper.notesInDb()
+  const noteToDelete = notesAtStart[0]
+
+  await api
+    .delete(`/api/notes/${noteToDelete.id}`)
+    .expect(204)
+
+  const notesAtEnd = await helper.notesInDb()
+
+  const ids = notesAtEnd.map(n => n.id)
+  assert(!ids.includes(noteToDelete.id))
+
+  assert.strictEqual(notesAtEnd.length, helper.initialNotes.length - 1)
 })
 
 after(async () => {
