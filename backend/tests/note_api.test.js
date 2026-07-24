@@ -4,7 +4,6 @@ const supertest = require('supertest')
 const app = require('../app')
 const helper = require('./test_helper')
 const Note = require('../models/note')
-
 const api = supertest(app)
 const assert = require('node:assert')
 
