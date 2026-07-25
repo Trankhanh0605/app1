@@ -8,7 +8,7 @@ function Footer() {
     <div style={footerStyle}>
       <br />
       <p>
-        Note app, Department of Computer Science, University of Helsinki 2025
+        Tran Nguyen Khanh, learning web dev
       </p>
     </div>
   );
