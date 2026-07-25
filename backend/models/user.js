@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-  username: String,
+  username: {
+    type: String, 
+    required: true, 
+    unique: true, // this ensures the uniqueness of username
+  },
   name: String,
   passwordHash: String,
   notes: [
@@ -23,5 +27,4 @@ userSchema.set('toJSON', {
 })
 
 const User = mongoose.model('User', userSchema)
-
 module.exports = User
