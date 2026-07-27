@@ -2,6 +2,7 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-    "content": "Khanh tran database", 
-    "important": true
+    "content": "Computer Science Major", 
+    "important": true, 
+    "userId": "6a64aa458bf84bcc76922e38" 
 }
