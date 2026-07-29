@@ -1,8 +1,8 @@
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IktoYW5oIiwiaWQiOiI2YTY0YWE0NThiZjg0YmNjNzY5MjJlMzgiLCJpYXQiOjE3ODUxMjQ5Mzh9.BBDn4lB4SBFXRcuhz5n09fo1DOEuFAXX5I4lpnXNjwU
 
 {
-    "content": "Computer Science Major", 
-    "important": true, 
-    "userId": "6a64aa458bf84bcc76922e38" 
+    "content": "Auth JWT single page app", 
+    "important": true
 }
