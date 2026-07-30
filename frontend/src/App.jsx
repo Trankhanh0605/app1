@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
+
 import Note from './components/Note'
-import noteService from './services/notes'
 import Notification from './components/Notification'
 import Footer from './components/Footer'
+
 import loginService from './services/login'
+import noteService from './services/notes'
 
 const App = () => {
   const [notes, setNotes] = useState([])
@@ -64,10 +66,16 @@ const App = () => {
     
     try {
       const user = await loginService.login({ username, password })
+
+      // save to local storage
+      window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
+
+      noteService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
-    } catch (exception) {
+    } 
+    catch {
       setErrorMessage('wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
@@ -119,31 +127,6 @@ const App = () => {
           {noteForm()}
         </div>
       )}
-
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>
-            username
-            <input
-              type="text"
-              value={username}
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            password
-            <input
-              type="password"
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </label>
-        </div>
-        <button type="submit">login</button>
-      </form>
 
       <div>
         <button onClick={() => setShowAll(!showAll)}>
