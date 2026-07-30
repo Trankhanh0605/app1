@@ -21,6 +21,10 @@ mongoose
     logger.error('error connection to MongoDB:', error.message)
   })
 
+app.get('/', (request, response) => {
+  response.send('<h1>Notes API Backend is running!</h1>')
+})
+
 app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
