@@ -14,7 +14,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser]=useState(null)
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     noteService.getAll().then((initialNotes) => {
@@ -63,7 +63,7 @@ const App = () => {
 
   const handleLogin = async event => {
     event.preventDefault()
-    
+
     try {
       const user = await loginService.login({ username, password })
 
@@ -74,7 +74,7 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-    } 
+    }
     catch {
       setErrorMessage('wrong credentials')
       setTimeout(() => {
@@ -119,9 +119,11 @@ const App = () => {
   return (
     <div>
       <h1>Notes</h1>
-
+      
+      {/* notification */}
       <Notification message={errorMessage} />
       
+      {/* login form */}
       {!user && loginForm()}
       {user && (
         <div>
@@ -129,13 +131,15 @@ const App = () => {
           {noteForm()}
         </div>
       )}
-
+      
+      {/* toggle importance */}
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all'}
         </button>
       </div>
 
+      {/* show notes */}
       <ul>
         {notesToShow.map((note) => (
           <Note
