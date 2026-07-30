@@ -119,7 +119,9 @@ const App = () => {
   return (
     <div>
       <h1>Notes</h1>
+
       <Notification message={errorMessage} />
+      
       {!user && loginForm()}
       {user && (
         <div>
@@ -133,6 +135,7 @@ const App = () => {
           show {showAll ? 'important' : 'all'}
         </button>
       </div>
+
       <ul>
         {notesToShow.map((note) => (
           <Note
@@ -142,10 +145,12 @@ const App = () => {
           />
         ))}
       </ul>
+
       <form onSubmit={addNote}>
         <input value={newNote} onChange={handleNoteChange} />
         <button type="submit">save</button>
       </form>
+
       <Footer />
     </div>
   )
