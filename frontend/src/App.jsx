@@ -119,10 +119,10 @@ const App = () => {
   return (
     <div>
       <h1>Notes</h1>
-      
+
       {/* notification */}
       <Notification message={errorMessage} />
-      
+
       {/* login form */}
       {!user && loginForm()}
       {user && (
@@ -131,7 +131,7 @@ const App = () => {
           {noteForm()}
         </div>
       )}
-      
+
       {/* toggle importance */}
       <div>
         <button onClick={() => setShowAll(!showAll)}>
