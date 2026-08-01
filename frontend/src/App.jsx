@@ -24,14 +24,14 @@ const App = () => {
     })
   }, [])
 
-  useEffect(()=>{
-    const loggedUserJSON=window.localStorage.getItem('loggedNoteappUser');
-    if (loggedUserJSON){
-      const user=JSON.parse(loggedUserJSON);
-      setUser(user); 
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser');
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
       noteService.setToken(user.token);
     }
-  },[]) 
+  }, [])
   // the empty array --> effect is executed only when the component is rendered for the first time.
 
   const addNote = (noteObject) => {

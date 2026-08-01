@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 function NoteForm({ createNote }) {
   const [newNote, setNewNote] = useState('');
 
@@ -25,4 +26,5 @@ function NoteForm({ createNote }) {
     </div>
   );
 }
+
 export default NoteForm
