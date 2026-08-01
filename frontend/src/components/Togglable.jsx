@@ -11,7 +11,7 @@ function Toggleable(props){
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>log in</button>
+        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
       </div>
 
       <div style={showWhenVisible}>
