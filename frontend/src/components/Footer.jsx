@@ -11,7 +11,7 @@ function Footer() {
         Tran Nguyen Khanh, learning web dev
       </p>
     </div>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

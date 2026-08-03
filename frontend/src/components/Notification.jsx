@@ -1,12 +1,12 @@
-function Notification({message}) {
-  if (message===null) {
-    return null; 
+function Notification({ message }) {
+  if (message === null) {
+    return null
   }
   return (
     <div className="error">
       {message}
     </div>
-  ); 
+  )
 }
 
-export default Notification;
+export default Notification
