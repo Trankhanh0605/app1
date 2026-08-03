@@ -5,7 +5,7 @@ function Toggleable (props) {
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
-  function toggleVisibility(visible) {
+  function toggleVisibility() {
     setVisible(!visible)
   }
 
