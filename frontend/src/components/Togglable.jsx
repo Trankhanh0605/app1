@@ -1,7 +1,7 @@
-import { useState, useImperativeHandle } from "react";
+import { useState, useImperativeHandle } from 'react'
 
 function Toggleable (props) {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
@@ -24,6 +24,6 @@ function Toggleable (props) {
         <button onClick={toggleVisibility}>cancel</button>
       </div>
     </div>
-  );
+  )
 }
-export default Toggleable; 
+export default Toggleable
