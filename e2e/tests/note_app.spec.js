@@ -71,6 +71,7 @@ describe('Note app', () => {
       })
 
       test('one of those can be made nonimportant', async ({ page }) => {
+        await page.pause()
         const otherNoteText = page.getByText('first note')
         const otherNoteElement = otherNoteText.locator('..')
         await otherNoteElement.getByRole('button', { name: 'make not important' }).click()
