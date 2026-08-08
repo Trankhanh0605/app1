@@ -23,15 +23,15 @@ describe('Note app', () => {
   test('user can log in', async ({ page }) => {
     await page.getByRole('button', { name: 'login' }).click()
     const textboxes = await page.getByRole('textbox').all()
-    await textboxes[0].fill('Khanh')
+    await textboxes[0].fill('TranKhanh')
     await textboxes[1].fill('khanh060506')
     await page.getByRole('button', { name: 'login' }).click()
-    await expect(page.getByText('TranKhanh logged in')).toBeVisible()
+    await expect(page.getByText('Khanh logged in')).toBeVisible()
   })
 
   test('login fails with wrong password', async ({ page }) => {
     await page.getByRole('button', { name: 'login' }).click()
-    await page.getByLabel('username').fill('Khanh')
+    await page.getByLabel('username').fill('TranKhanh')
     await page.getByLabel('password').fill('wrong')
     await page.getByRole('button', { name: 'login' }).click()
 
@@ -39,18 +39,26 @@ describe('Note app', () => {
     await expect(errorDiv).toContainText('wrong credentials')
     await expect(errorDiv).toHaveCSS('border-style', 'solid')
     await expect(errorDiv).toHaveCSS('color', 'rgb(255, 0, 0)')
-    await expect(page.getByText('TranKhanh logged in')).not.toBeVisible()
+    await expect(page.getByText('Khanh logged in')).not.toBeVisible()
+  })
+
+  test('user can log in with correct credentials', async({page})=>{
+    await page.getByRole('button', {name:'login'}).click()
+    await page.getByLabel('username').fill('TranKhanh')
+    await page.getByLabel('password').fill('khanh060506')
+    await page.getByRole('button', {name:'login'}).click()
+    await expect(page.getByText('Khanh logged in')).toBeVisible()
   })
 
   describe('when logged in', () => {
     beforeEach(async ({ page }) => {
       await page.getByRole('button', { name: 'login' }).click()
-      await page.getByLabel('username').fill('Khanh')
+      await page.getByLabel('username').fill('TranKhanh')
       await page.getByLabel('password').fill('khanh060506')
       await page.getByRole('button', { name: 'login' }).click()
     })
     test('a new note can be created', async ({ page }) => {
-      await expect(page.getByText('TranKhanh logged in')).toBeVisible()
+      await expect(page.getByText('Khanh logged in')).toBeVisible()
       await page.getByRole('button', { name: 'new note' }).click()
       await page.getByRole('textbox').fill('a note created by playwright')
       await page.getByRole('button', { name: 'save' }).click()
