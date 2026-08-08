@@ -1,10 +1,10 @@
 const { test, expect, beforeEach, describe } = require("@playwright/test")
-const {loginWith}=require('./helper')
+const { loginWith, createNote } = require('./helper')
 
 describe('Note app', () => {
   beforeEach(async ({ page, request }) => {
-    await request.post('http://localhost:3001/api/testing/reset')
-    await request.post('http://localhost:3001/api/users', {
+    await request.post('/api/testing/reset')
+    await request.post('/api/users', {
       data: {
         name: 'Khanh',
         username: 'TranKhanh',
@@ -12,7 +12,7 @@ describe('Note app', () => {
       }
     })
 
-    await page.goto('http://localhost:5173')
+    await page.goto('/')
   })
 
   test('front page can be opened', async ({ page }) => {
@@ -36,11 +36,11 @@ describe('Note app', () => {
     await expect(page.getByText('Khanh logged in')).not.toBeVisible()
   })
 
-  test('user can log in with correct credentials', async({page})=>{
-    await page.getByRole('button', {name:'login'}).click()
+  test('user can log in with correct credentials', async ({ page }) => {
+    await page.getByRole('button', { name: 'login' }).click()
     await page.getByLabel('username').fill('TranKhanh')
     await page.getByLabel('password').fill('khanh060506')
-    await page.getByRole('button', {name:'login'}).click()
+    await page.getByRole('button', { name: 'login' }).click()
     await expect(page.getByText('Khanh logged in')).toBeVisible()
   })
 
@@ -49,18 +49,13 @@ describe('Note app', () => {
       await loginWith(page, 'TranKhanh', 'khanh060506')
     })
     test('a new note can be created', async ({ page }) => {
-      await expect(page.getByText('Khanh logged in')).toBeVisible()
-      await page.getByRole('button', { name: 'new note' }).click()
-      await page.getByRole('textbox').fill('a note created by playwright')
-      await page.getByRole('button', { name: 'save' }).click()
+      await createNote(page, 'a note created by playwright')
       await expect(page.getByText('a note created by playwright')).toBeVisible()
     })
 
     describe('and a note exists', () => {
       beforeEach(async ({ page }) => {
-        await page.getByRole('button', { name: 'new note' }).click()
-        await page.getByRole('textbox').fill('another note by playwright')
-        await page.getByRole('button', { name: 'save' }).click()
+        await createNote(page, 'another note by playwright')
       })
 
       test('importance can be changed', async ({ page }) => {
@@ -69,6 +64,19 @@ describe('Note app', () => {
       })
     })
 
+    describe('and several notes exists', () => {
+      beforeEach(async ({ page }) => {
+        await createNote(page, 'first note')
+        await createNote(page, 'second note')
+      })
+
+      test('one of those can be made nonimportant', async ({ page }) => {
+        const otherNoteText = page.getByText('first note')
+        const otherNoteElement = otherNoteText.locator('..')
+        await otherNoteElement.getByRole('button', { name: 'make not important' }).click()
+        await expect(otherNoteElement.getByText('make important')).toBeVisible()
+      })
+    })
   })
 })
 
