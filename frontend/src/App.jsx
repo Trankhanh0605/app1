@@ -2,15 +2,14 @@ import { useState, useEffect } from 'react'
 import noteService from './services/notes'
 
 import {
-  BrowserRouter as Router,
-  Routes, Route, Link,
-  useMatch
+  Routes, Route, Link, useMatch
 } from 'react-router-dom'
 
 import NoteList from './components/NoteList'
 import Home from './components/Home'
 import Footer from './components/Footer'
 import NoteForm from './components/NoteForm'
+import Note from './components/Note'
 
 const App = () => {
   const [notes, setNotes] = useState([])
@@ -27,8 +26,26 @@ const App = () => {
     })
   }
 
-  const padding = {
-    padding: 10
+  const toggleImportanceOf = id => {
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    noteService
+      .update(id, changedNote)
+      .then(returnedNote => {
+        setNotes(notes.map(note => (note.id !== id ? note : returnedNote)))
+      })
+      .catch(() => {
+        /*
+        setErrorMessage(
+          `Note '${note.content}' was already removed from server`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        */
+        setNotes(notes.filter(n => n.id !== id))
+      })
   }
 
   const deleteNote = (id) => {
@@ -37,13 +54,17 @@ const App = () => {
     })
   }
 
+  const padding = {
+    padding: 10
+  }
+
   const match = useMatch('/notes/:id')
   const note = match
     ? notes.find(note => note.id === match.params.id)
     : null
 
   return (
-    <Router>
+    <div>
       <div>
         <Link style={padding} to="/">home</Link>
         <Link style={padding} to="/notes">notes</Link>
@@ -62,13 +83,13 @@ const App = () => {
           <NoteList notes={notes} />
         } />
         <Route path="/create" element={
-          <NoteForm createNote={addNote}/>
+          <NoteForm createNote={addNote} />
         } />
         <Route path="/" element={<Home />} />
       </Routes>
 
       <Footer />
-    </Router>
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
 const Home = () => {
   return (
-    <div>
+    <div style={{ marginTop: 15 }}>
       Welcome to the homepage
     </div>
   )
