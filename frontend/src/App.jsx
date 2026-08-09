@@ -3,7 +3,8 @@ import noteService from './services/notes'
 
 import {
   BrowserRouter as Router,
-  Routes, Route, Link
+  Routes, Route, Link,
+  useMatch
 } from 'react-router-dom'
 
 import NoteList from './components/NoteList'
@@ -27,8 +28,19 @@ const App = () => {
   }
 
   const padding = {
-    padding: 5
+    padding: 10
   }
+
+  const deleteNote = (id) => {
+    noteService.remove(id).then(() => {
+      setNotes(notes.filter(n => n.id !== id))
+    })
+  }
+
+  const match = useMatch('/notes/:id')
+  const note = match
+    ? notes.find(note => note.id === match.params.id)
+    : null
 
   return (
     <Router>
@@ -38,8 +50,14 @@ const App = () => {
         <Link style={padding} to="/create">new note</Link>
       </div>
 
-
       <Routes>
+        <Route path="/notes/:id" element={
+          <Note
+            note={note}
+            toggleImportanceOf={toggleImportanceOf}
+            deleteNote={deleteNote}
+          />
+        } />
         <Route path="/notes" element={
           <NoteList notes={notes} />
         } />
@@ -48,6 +66,7 @@ const App = () => {
         } />
         <Route path="/" element={<Home />} />
       </Routes>
+
       <Footer />
     </Router>
   )

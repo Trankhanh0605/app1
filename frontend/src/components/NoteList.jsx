@@ -1,9 +1,13 @@
+import { Link } from 'react-router-dom'
+
 import { useState, useEffect, useRef } from 'react'
+
 import Note from './Note'
 import Notification from './Notification'
 import LoginForm from './LoginForm'
 import NoteForm from './NoteForm'
 import Togglable from './Togglable'
+
 import loginService from '../services/login'
 import noteService from '../services/notes'
 
@@ -35,7 +39,7 @@ const NoteList = ({ notes }) => {
     noteService
       .update(id, changedNote)
       .then(returnedNote => {
-        //setNotes(notes.map(note => (note.id !== id ? note : returnedNote)))
+        // setNotes(notes.map(note => (note.id !== id ? note : returnedNote)))
       })
       .catch(() => {
         setErrorMessage(
@@ -96,11 +100,9 @@ const NoteList = ({ notes }) => {
       </div>
       <ul>
         {notesToShow.map(note => (
-          <Note
-            key={note.id}
-            note={note}
-            toggleImportance={() => toggleImportanceOf(note.id)}
-          />
+          <li key={note.id}>
+            <Link to={`/notes/${note.id}`}>{note.content}</Link>
+          </li>
         ))}
       </ul>
     </div>
