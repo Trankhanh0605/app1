@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import noteService from './services/notes'
 import { Container } from '@mui/material'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
 
 import {
   Routes, Route, Link, useMatch
@@ -17,12 +20,14 @@ const App = () => {
   const [notes, setNotes] = useState([])
   const [notification, setNotification] = useState(null)
 
+  // fetching
   useEffect(() => {
     noteService.getAll().then(initialNotes => {
       setNotes(initialNotes)
     })
   }, [])
 
+  //log in
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
     if (loggedUserJSON) {
@@ -68,22 +73,28 @@ const App = () => {
     })
   }
 
-  const padding = {
-    padding: 10
-  }
-
   const match = useMatch('/notes/:id')
   const note = match
     ? notes.find(note => note.id === match.params.id)
     : null
 
+  const style = { '&:hover': { bgcolor: 'rgba(255,255,255,0.3)' } }
+
   return (
     <Container>
-      <div>
-        <Link style={padding} to="/">home</Link>
-        <Link style={padding} to="/notes">notes</Link>
-        <Link style={padding} to="/create">new note</Link>
-      </div>
+      <AppBar position="static">
+        <Toolbar>
+          <Button color="inherit" component={Link} to="/" sx={style}>
+            home
+          </Button>
+          <Button color="inherit" component={Link} to="/notes" sx={style}>
+            notes
+          </Button>
+          <Button color="inherit" component={Link} to="/create" sx={style}>
+            new note
+          </Button>
+        </Toolbar>
+      </AppBar>
 
       <Notification notification={notification} />
 
